@@ -1,0 +1,2 @@
+rootProject.name = "Doctorxub"
+include ':app'
