@@ -1,8 +1,12 @@
 package com.example.doctorxub.server
 
+import android.content.Context
 import android.util.Log
+import com.example.doctorxub.db.AppDatabase
 import com.example.doctorxub.server.api_responses.DiseasesResponse
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -10,6 +14,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import java.lang.Exception
 
 
 interface ApiInterface {
@@ -21,9 +26,7 @@ interface ApiInterface {
             .create()
 
         var okHttpClient = OkHttpClient()
-            .newBuilder() //httpLogging interceptor for logging network requests
-//            .addInterceptor(httpLoggingInterceptor) //Encryption interceptor for encryption of request data
-//            .addInterceptor(encryptionInterceptor) // interceptor for decryption of request data
+            .newBuilder()
             .addInterceptor(ApiInterceptor())
             .build()
 
@@ -40,20 +43,22 @@ interface ApiInterface {
         val retrofit = create()
 
 
-        fun getDiseases() {
-            retrofit.getCurrentWeatherData().enqueue( object : Callback<DiseasesResponse> {
-                override fun onResponse(call: Call<DiseasesResponse>?, response: Response<DiseasesResponse>?) {
-                    Log.d("awslog", "response : ${response?.body()?:"null body"}")
+        fun getAndStoreDiseases(context: Context) {
+            GlobalScope.launch {
+                try {
+                    retrofit.getCurrentWeatherData().diseases?.let {
+                        val db = AppDatabase(context)
+                        db.DiseasesDao().nukeTable()
+                        db.DiseasesDao().insertAll(*it.toTypedArray())
+                    }
                 }
-
-                override fun onFailure(call: Call<DiseasesResponse>?, t: Throwable?) {
-                    Log.e("awslog", "t : $t")
+                catch (exception: Exception){
+                    Log.e("awslogE", "error loading Diseases error message: ${exception.message}")
                 }
-            })
-
+            }
         }
     }
 
     @GET("diseases")
-    fun getCurrentWeatherData(): Call<DiseasesResponse>
+    suspend fun getCurrentWeatherData(): DiseasesResponse
 }
