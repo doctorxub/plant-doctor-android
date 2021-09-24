@@ -2,13 +2,21 @@ package com.example.doctorxub.ui
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.doctorxub.db.data.Disease
+import com.example.doctorxub.ui.models.DiseaseRowModel_
 
 class DiseasesController : EpoxyController() {
 
   var data : List<Disease> = emptyList()
+  var onItemClickListener: DiseasesClickListener? = null
   override fun buildModels() {
     data.forEach {
-      DiseaseRowModel_().id(it.id).disease(it).also { add(it) }
+      DiseaseRowModel_()
+        .id(it.id)
+        .disease(it)
+        .clickListener(onItemClickListener)
+        .also {
+          add(it)
+        }
     }
   }
 
