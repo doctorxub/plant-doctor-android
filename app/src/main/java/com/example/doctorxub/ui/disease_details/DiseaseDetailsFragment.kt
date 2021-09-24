@@ -10,15 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.doctorxub.R
-import com.example.doctorxub.databinding.FragmentSecondBinding
-import com.example.doctorxub.ui.diseases.DiseasesFragmentDirections
+import com.example.doctorxub.databinding.FragmentDiseaseDetailsBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class DiseaseDetailsFragment : Fragment() {
 
-  private var _binding: FragmentSecondBinding? = null
+  private var _binding: FragmentDiseaseDetailsBinding? = null
 
   // This property is only valid between onCreateView and
   // onDestroyView.
@@ -33,7 +32,7 @@ class DiseaseDetailsFragment : Fragment() {
     savedInstanceState: Bundle?
   ): View? {
 
-    _binding = FragmentSecondBinding.inflate(inflater, container, false)
+    _binding = FragmentDiseaseDetailsBinding.inflate(inflater, container, false)
     return binding.root
 
   }

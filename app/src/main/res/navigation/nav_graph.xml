@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.doctorxub.ui.diseases.DiseasesFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_diseases">
 
         <action
@@ -19,7 +19,7 @@
         android:id="@+id/SecondFragment"
         android:name="com.example.doctorxub.ui.disease_details.DiseaseDetailsFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_disease_details">
 
         <argument
             android:name="diseaseId"
