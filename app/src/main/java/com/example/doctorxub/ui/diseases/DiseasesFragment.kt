@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.doctorxub.R
 import com.example.doctorxub.databinding.FragmentDiseasesBinding
 import com.example.doctorxub.db.data.Disease
 import com.example.doctorxub.ui.DiseasesController
@@ -38,7 +36,6 @@ class DiseasesFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    Log.d("awslog", "onViewCreated")
     activity?.let{ activity ->
       dataController = DiseasesController().also {
         _binding?.recyclerView?.apply {
@@ -46,8 +43,8 @@ class DiseasesFragment : Fragment() {
           layoutManager = LinearLayoutManager(activity)
         }
         it.onItemClickListener = object : DiseasesController.DiseasesClickListener {
-          override fun onDiseaseClick() {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+          override fun onDiseaseClick(id: Int) {
+            findNavController().navigate(DiseasesFragmentDirections.actionFirstFragmentToSecondFragment(id))
           }
 
           override fun onTakePictureClick() {

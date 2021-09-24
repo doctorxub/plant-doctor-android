@@ -22,7 +22,7 @@ class DiseasesController : EpoxyController() {
 
 
   interface DiseasesClickListener{
-    fun onDiseaseClick()
+    fun onDiseaseClick(id: Int)
     fun onTakePictureClick()
   }
 

@@ -21,18 +21,26 @@ abstract class DiseaseRowModel : EpoxyModelWithHolder<DiseaseRowModel.Holder>() 
   var clickListener : DiseasesController.DiseasesClickListener? = null
 
   override fun bind(holder: Holder) {
-    holder.titleTextView.text = disease?.disease?:""
-    holder.itemView.setOnClickListener {
-      clickListener?.onDiseaseClick()
+    holder.disease.text = disease?.disease?:""
+    holder.title.text = disease?.title?:""
+    holder.type.text = disease?.type?:""
+    disease?.id?.let{ id ->
+      holder.itemView.setOnClickListener {
+        clickListener?.onDiseaseClick(id)
+      }
     }
   }
 
   class Holder : EpoxyHolder() {
-    lateinit var titleTextView: TextView
+    lateinit var title: TextView
+    lateinit var disease: TextView
+    lateinit var type: TextView
     lateinit var itemView: View
     override fun bindView(itemView: View) {
       this.itemView = itemView
-      titleTextView = itemView.findViewById(R.id.tv_title)
+      title = itemView.findViewById(R.id.title)
+      disease = itemView.findViewById(R.id.disease)
+      type = itemView.findViewById(R.id.type)
     }
   }
 }

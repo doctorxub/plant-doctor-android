@@ -13,8 +13,8 @@ interface DiseasesDao {
   @Query("SELECT * FROM Disease")
   fun getAll(): LiveData<List<Disease>>
 
-  @Query("SELECT * FROM Disease WHERE disease LIKE :disease LIMIT 1")
-  fun findByName(disease: String): LiveData<Disease>
+  @Query("SELECT * FROM Disease WHERE id LIKE :id LIMIT 1")
+  fun findById(id: Int): LiveData<Disease>
 
   @Insert
   fun insertAll(vararg deseases: Disease)

@@ -17,10 +17,14 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.doctorxub.ui.DiseaseDetailsFragment"
+        android:name="com.example.doctorxub.ui.disease_details.DiseaseDetailsFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
+        <argument
+            android:name="diseaseId"
+            app:argType="integer"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
