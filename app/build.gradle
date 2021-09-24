@@ -35,6 +35,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+    kapt {
+        correctErrorTypes = true
+    }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -64,6 +70,12 @@ dependencies {
 
 //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+
+
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+//    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
 
     testImplementation 'junit:junit:4.+'

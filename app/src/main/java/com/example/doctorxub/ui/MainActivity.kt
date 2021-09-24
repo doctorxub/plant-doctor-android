@@ -1,4 +1,4 @@
-package com.example.doctorxub
+package com.example.doctorxub.ui
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -9,7 +9,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.example.doctorxub.R
 import com.example.doctorxub.databinding.ActivityMainBinding
+import com.example.doctorxub.server.ApiInterface
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    ApiInterface.getAndStoreDiseases(this)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 

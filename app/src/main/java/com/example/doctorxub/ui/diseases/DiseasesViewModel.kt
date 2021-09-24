@@ -1,4 +1,4 @@
-package com.example.doctorxub.diseases
+package com.example.doctorxub.ui.diseases
 
 import android.content.Context
 import androidx.lifecycle.LiveData
