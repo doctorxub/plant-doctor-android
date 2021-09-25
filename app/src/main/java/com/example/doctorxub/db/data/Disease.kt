@@ -11,7 +11,7 @@ data class Disease(
   val type: String?,
   val image: String?,
   val hosts: String?,
-  val sci: String?
-//  val symptoms: List<String?>,
-//  val control: List<String>?
+  val sci: String?,
+  val symptoms: List<String>?,
+  val control: List<String>?
 )

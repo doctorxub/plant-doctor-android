@@ -1,17 +1,13 @@
 package com.example.doctorxub.ui
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.doctorxub.R
 import com.example.doctorxub.databinding.ActivityMainBinding
 import com.example.doctorxub.server.ApiInterface
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,11 +32,11 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    menuInflater.inflate(R.menu.menu_main, menu)
-    return true
-  }
+//  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//    // Inflate the menu; this adds items to the action bar if it is present.
+//    menuInflater.inflate(R.menu.menu_main, menu)
+//    return true
+//  }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     // Handle action bar item clicks here. The action bar will
@@ -52,7 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-//  override fun onSupportNavigateUp(): Boolean {
-//    return super.onSupportNavigateUp()
-//  }
+  override fun onSupportNavigateUp(): Boolean {
+    onBackPressed()
+    return true
+  }
 }
