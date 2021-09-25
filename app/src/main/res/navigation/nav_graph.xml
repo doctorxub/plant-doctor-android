@@ -28,6 +28,10 @@
             android:name="diseaseId"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="image"
+            app:argType="string"
+            android:defaultValue="" />
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />

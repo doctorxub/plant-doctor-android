@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
           if(result.second != -1){
             controller.navigate(
               DiseasesFragmentDirections.actionToSecondFragment(
-                result.second
+                result.second, file.path
               )
             )
           }

@@ -11,4 +11,5 @@
     <color name="red_light">#80FF6F6F</color>
     <color name="green_light">#805FA52E</color>
     <color name="text_color">#FF000000</color>
+    <color name="grey_transparent">#6F6C6C6C</color>
 </resources>

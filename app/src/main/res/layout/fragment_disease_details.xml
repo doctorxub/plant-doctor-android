@@ -16,7 +16,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="200dp"
             android:background="?attr/colorPrimary"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
@@ -33,13 +33,13 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
+                android:foreground="@color/grey_transparent"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
                 app:popupTheme="@style/Theme.Doctorxub.PopupOverlay"
                 app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -57,6 +57,15 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/confidence"
+                android:layout_margin="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="@drawable/confidence_drawable"
+                tools:text="Confidence: 99%"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

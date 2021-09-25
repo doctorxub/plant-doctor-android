@@ -1,5 +1,7 @@
 package com.example.doctorxub.ui.disease_details
 
+import android.R
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
@@ -7,12 +9,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.doctorxub.databinding.FragmentDiseaseDetailsBinding
 import com.example.doctorxub.db.data.Disease
+import java.io.File
+import java.lang.Exception
 
 
 /**
@@ -20,11 +25,10 @@ import com.example.doctorxub.db.data.Disease
  */
 class DiseaseDetailsFragment : Fragment() {
 
-  private var _binding: FragmentDiseaseDetailsBinding? = null
+  private var binding: FragmentDiseaseDetailsBinding? = null
 
   // This property is only valid between onCreateView and
   // onDestroyView.
-  private val binding get() = _binding!!
   val args: DiseaseDetailsFragmentArgs by navArgs()
 
 
@@ -35,15 +39,17 @@ class DiseaseDetailsFragment : Fragment() {
     savedInstanceState: Bundle?
   ): View? {
 
-    _binding = FragmentDiseaseDetailsBinding.inflate(inflater, container, false)
-    return binding.root
+    binding = FragmentDiseaseDetailsBinding.inflate(inflater, container, false)
+    return binding?.root
 
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     (activity as? AppCompatActivity)?.let{ activity ->
-      activity.setSupportActionBar(binding.toolbar)
+      binding?.toolbar?.let{
+      activity.setSupportActionBar(it)
+    }
       activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
       activity.supportActionBar?.setDisplayShowHomeEnabled(true)
       setHasOptionsMenu(false)
@@ -57,13 +63,37 @@ class DiseaseDetailsFragment : Fragment() {
         })
       }
     }
+
+    binding?.expandedImage?.apply{
+      visibility = (args.image as? String)?.let{
+        val file = File(it)
+        if(file.exists()) {
+          try {
+            val myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath())
+            setImageBitmap(myBitmap)
+          }
+          catch (e: Exception){
+            Log.e("awslog", "error loading image from disk  error message: ${e.message}")
+          }
+        }
+      View.VISIBLE
+    }?:View.GONE
+    }
   }
 
   private fun updateUI(disease: Disease){
-    binding.collapsingToolbar.title = getSpannableExpandedTitle(disease)
-    binding.hosts.text = disease.hosts
-    binding.controls.text = listToText(disease.control)
-    binding.symptoms.text = listToText(disease.symptoms)
+    binding?.apply{
+      collapsingToolbar.title = getSpannableExpandedTitle(disease)
+      hosts.text = disease.hosts
+      controls.text = listToText(disease.control)
+      symptoms.text = listToText(disease.symptoms)
+      confidence.apply {
+        visibility = disease.confidence?.takeIf { it > -1 }?.let {
+          text = "Confidence: ".plus(it).plus("%")
+          View.VISIBLE
+        }?: View.GONE
+      }
+    }
   }
 
 
@@ -92,7 +122,7 @@ class DiseaseDetailsFragment : Fragment() {
 
   override fun onDestroyView() {
     super.onDestroyView()
-    _binding = null
+    binding = null
   }
 
 
