@@ -28,7 +28,11 @@ class DiseasesFragment : Fragment() {
 
   private var dataController: DiseasesController? = null
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
     _binding = FragmentDiseasesBinding.inflate(inflater, container, false)
     return binding.root
   }
@@ -36,7 +40,7 @@ class DiseasesFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    activity?.let{ activity ->
+    activity?.let { activity ->
       dataController = DiseasesController().also {
         _binding?.recyclerView?.apply {
           adapter = it.adapter
@@ -44,13 +48,12 @@ class DiseasesFragment : Fragment() {
         }
         it.onItemClickListener = object : DiseasesController.DiseasesClickListener {
           override fun onDiseaseClick(id: Int) {
-            findNavController().navigate(DiseasesFragmentDirections.actionFirstFragmentToSecondFragment(id))
+            findNavController().navigate(
+              DiseasesFragmentDirections.actionFirstFragmentToSecondFragment(
+                id
+              )
+            )
           }
-
-          override fun onTakePictureClick() {
-            TODO("Not yet implemented")
-          }
-
         }
       }
       model.getDiseasesLiveData(activity).let {
@@ -64,8 +67,8 @@ class DiseasesFragment : Fragment() {
     }
   }
 
-  fun updateController(dataList: List<Disease>){
-    dataController?.apply{
+  fun updateController(dataList: List<Disease>) {
+    dataController?.apply {
       data = dataList
       requestModelBuild()
     }

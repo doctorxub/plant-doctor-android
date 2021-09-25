@@ -13,5 +13,7 @@ data class Disease(
   val hosts: String?,
   val sci: String?,
   val symptoms: List<String>?,
-  val control: List<String>?
+  val control: List<String>?,
+  val predicted: Boolean = false,
+  val confidence: Int?
 )

@@ -17,7 +17,7 @@ class ApiInterceptor: Interceptor {
       var contentType = response.header("Content-Type")
       if (TextUtils.isEmpty(contentType)) contentType = "application/json"
       val responseString = response.body()!!.string()
-//      Log.d("awslog", "responseString : $responseString")
+      Log.d("awslogreply", "responseString : $responseString")
       newResponse.body(ResponseBody.create(MediaType.parse(contentType), responseString))
       return newResponse.build()
     }

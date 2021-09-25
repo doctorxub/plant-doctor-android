@@ -5,6 +5,9 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/FirstFragment">
 
+    <action
+        android:id="@+id/action_to_SecondFragment"
+        app:destination="@id/SecondFragment" />
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.doctorxub.ui.diseases.DiseasesFragment"

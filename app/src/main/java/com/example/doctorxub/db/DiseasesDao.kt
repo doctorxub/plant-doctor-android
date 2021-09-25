@@ -2,10 +2,7 @@ package com.example.doctorxub.db
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.doctorxub.db.data.Disease
 
 @Dao
@@ -18,6 +15,9 @@ interface DiseasesDao {
 
   @Insert
   fun insertAll(vararg deseases: Disease)
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  fun insert(desease: Disease)
 
   @Delete
   fun delete(user: Disease)
