@@ -10,7 +10,7 @@
         app:destination="@id/SecondFragment" />
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.doctorxub.ui.diseases.DiseasesFragment"
+        android:name="com.doctorx.ui.diseases.DiseasesFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_diseases">
 
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.doctorxub.ui.disease_details.DiseaseDetailsFragment"
+        android:name="com.doctorx.ui.disease_details.DiseaseDetailsFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_disease_details">
 
