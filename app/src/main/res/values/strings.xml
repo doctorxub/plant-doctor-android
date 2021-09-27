@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doctorxub</string>
+    <string name="app_name">DoctorX</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="supported_diseases">Supported Diseases</string>
