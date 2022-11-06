@@ -19,7 +19,7 @@ import retrofit2.http.*
 interface ApiInterface {
 
   companion object {
-    val BaseUrl = "https://doctorxub.com/api/"
+    val BaseUrl = "http://34.27.81.56/api/"
     var gson = GsonBuilder()
       .setLenient()
       .create()

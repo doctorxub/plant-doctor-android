@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.doctorx.db.converters.StringsToStringConverter
 import com.doctorx.db.data.Disease
 
-@Database(entities = arrayOf(Disease::class), version = 1)
+@Database(entities = arrayOf(Disease::class), version = 3)
 @TypeConverters(StringsToStringConverter::class)
 abstract class AppDatabase: RoomDatabase() {
   abstract fun DiseasesDao(): DiseasesDao
@@ -22,7 +22,7 @@ abstract class AppDatabase: RoomDatabase() {
     }
 
     private fun buildDatabase(context: Context) = Room.databaseBuilder(context,
-      AppDatabase::class.java, "diseases.db")
+      AppDatabase::class.java, "diseases.db").fallbackToDestructiveMigration()
       .build()
   }
 

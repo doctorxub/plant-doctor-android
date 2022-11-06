@@ -82,8 +82,8 @@ class DiseaseDetailsFragment : Fragment() {
   private fun updateUI(disease: Disease){
     binding?.apply{
       collapsingToolbar.title = getSpannableExpandedTitle(disease)
-      hosts.text = disease.hosts
-      controls.text = listToText(disease.control)
+      hosts.text = disease.conditions
+      controls.text = listToText(disease.chemical_control)
       symptoms.text = listToText(disease.symptoms)
       confidence.apply {
         visibility = disease.confidence?.takeIf { it > -1 }?.let {
@@ -96,12 +96,12 @@ class DiseaseDetailsFragment : Fragment() {
 
 
   private fun getSpannableExpandedTitle(disease: Disease): SpannableString{
-    var title = disease.title?.plus("\n")?:""
-    title = title.plus(disease.disease?:"").plus("\n")
-    title = title.plus(disease.type?:"")
+    var title = disease.type_fr?.plus("\n")?:""
+    title = title.plus(disease.name_fr?:"").plus("\n")
+    title = title.plus(disease.pathogen_fr?:"")
     val ss1 = SpannableString(title)
-    val titleSize = disease.title?.length?.plus(1)?:0
-    val diseaseSize = disease.disease?.length?.plus(1)?:0
+    val titleSize = disease.type_fr?.length?.plus(1)?:0
+    val diseaseSize = disease.name_fr?.length?.plus(1)?:0
     ss1.setSpan(RelativeSizeSpan(0.7f), titleSize, titleSize + diseaseSize, 0) // set size
     ss1.setSpan(RelativeSizeSpan(0.5f), (titleSize + diseaseSize -1), title.length, 0) // set size
     return ss1
