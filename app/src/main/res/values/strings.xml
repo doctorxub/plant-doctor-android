@@ -2,8 +2,12 @@
     <string name="app_name">DoctorX Nabat</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="supported_diseases">Diseases</string>
+    <string name="supported_diseases">Supported Diseases</string>
+    <string name="supported_diseases_fr">Maladies prises en charge</string>
+    <string name="supported_diseases_ar">Maladies prises en charge</string>
     <string name="EN">EN</string>
+    <string name="FR">FR</string>
+    <string name="AR">AR</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -13,4 +17,5 @@
     <string name="conditions_and_geo">Conditions and Geo</string>
     <string name="symptoms">Symptoms</string>
     <string name="control">Control</string>
+    <string name="pref_lang">lang</string>
 </resources>

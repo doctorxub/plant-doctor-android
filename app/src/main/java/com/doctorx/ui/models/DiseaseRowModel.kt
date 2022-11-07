@@ -16,14 +16,30 @@ abstract class DiseaseRowModel : EpoxyModelWithHolder<DiseaseRowModel.Holder>() 
 
   @EpoxyAttribute
   var disease: Disease? = null
+  @EpoxyAttribute
+  var lang: String? = null
 
   @EpoxyAttribute
   var clickListener : DiseasesController.DiseasesClickListener? = null
 
   override fun bind(holder: Holder) {
-    holder.disease.text = disease?.name?:""
-    holder.title.text = disease?.type?:""
-    holder.type.text = disease?.pathogen?:""
+    when {
+        lang.equals("FR") -> {
+          holder.disease.text = disease?.name_fr?:""
+          holder.title.text = disease?.type_fr?:""
+          holder.type.text = disease?.pathogen_fr?:""
+        }
+        lang.equals("AR") -> {
+          holder.disease.text = disease?.name_ar?:""
+          holder.title.text = disease?.type_ar?:""
+          holder.type.text = disease?.pathogen_ar?:""
+        }
+        else -> {
+          holder.disease.text = disease?.name?:""
+          holder.title.text = disease?.type?:""
+          holder.type.text = disease?.pathogen?:""
+        }
+    }
     disease?.id?.let{ id ->
       holder.itemView.setOnClickListener {
         clickListener?.onDiseaseClick(id)
