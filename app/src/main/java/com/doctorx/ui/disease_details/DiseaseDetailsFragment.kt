@@ -105,14 +105,14 @@ class DiseaseDetailsFragment : Fragment() {
 
 
   private fun getSpannableExpandedTitle(disease: Disease): SpannableString{
-    var title = disease.type_fr?.plus("\n")?:""
+    var title = disease.type?.plus("\n")?:""
     title = title.plus(disease.name?:"").plus("\n")
     title = title.plus(disease.pathogen?:"")
     val ss1 = SpannableString(title)
     val titleSize = disease.type?.length?.plus(1)?:0
     val diseaseSize = disease.name?.length?.plus(1)?:0
-    ss1.setSpan(RelativeSizeSpan(0.7f), titleSize, titleSize + diseaseSize, 0) // set size
-    ss1.setSpan(RelativeSizeSpan(0.5f), (titleSize + diseaseSize -1), title.length, 0) // set size
+    ss1.setSpan(RelativeSizeSpan(0.5f), titleSize, titleSize + diseaseSize, 0) // set size
+    ss1.setSpan(RelativeSizeSpan(0.4f), (titleSize + diseaseSize -1), title.length, 0) // set size
     return ss1
   }
 

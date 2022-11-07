@@ -3,10 +3,14 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="supported_diseases">Diseases</string>
+    <string name="EN">EN</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="conditions_and_geo">Conditions and Geo</string>
+    <string name="symptoms">Symptoms</string>
+    <string name="control">Control</string>
 </resources>
