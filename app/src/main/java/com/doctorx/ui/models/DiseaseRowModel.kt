@@ -21,9 +21,9 @@ abstract class DiseaseRowModel : EpoxyModelWithHolder<DiseaseRowModel.Holder>() 
   var clickListener : DiseasesController.DiseasesClickListener? = null
 
   override fun bind(holder: Holder) {
-    holder.disease.text = disease?.name_fr?:""
-    holder.title.text = disease?.type_fr?:""
-    holder.type.text = disease?.pathogen_fr?:""
+    holder.disease.text = disease?.name?:""
+    holder.title.text = disease?.type?:""
+    holder.type.text = disease?.pathogen?:""
     disease?.id?.let{ id ->
       holder.itemView.setOnClickListener {
         clickListener?.onDiseaseClick(id)

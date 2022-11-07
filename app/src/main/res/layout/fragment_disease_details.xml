@@ -82,9 +82,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
+                        android:text="Conditions and Geo"
                         android:textSize="16sp"
-                        android:text="Hosts:"/>
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/hosts"
                         android:layout_width="wrap_content"
@@ -110,8 +110,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="Symptoms:"/>
+                        android:text="Symptoms"
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/symptoms"
                         android:layout_width="wrap_content"
@@ -138,8 +138,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="Control:"/>
+                        android:text="Control"
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/controls"
                         android:layout_width="wrap_content"

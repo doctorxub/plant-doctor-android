@@ -79,11 +79,20 @@ class DiseaseDetailsFragment : Fragment() {
     }
   }
 
+  private fun getControlsText(disease: Disease): String {
+    return "Chemical Controls:".plus("\n")
+      .plus(listToText(disease.chemical_control)).plus("\n\n\n")
+      .plus("Pest Management:").plus("\n")
+      .plus(listToText(disease.pest_management)).plus("\n\n\n")
+      .plus("Bio Controls:").plus("\n")
+      .plus(listToText(disease.bio_control))
+  }
+
   private fun updateUI(disease: Disease){
     binding?.apply{
       collapsingToolbar.title = getSpannableExpandedTitle(disease)
-      hosts.text = disease.conditions
-      controls.text = listToText(disease.chemical_control)
+      hosts.text = disease.conditions.plus("\n\n").plus(disease.geo)
+      controls.text = getControlsText(disease)
       symptoms.text = listToText(disease.symptoms)
       confidence.apply {
         visibility = disease.confidence?.takeIf { it > -1 }?.let {
@@ -97,11 +106,11 @@ class DiseaseDetailsFragment : Fragment() {
 
   private fun getSpannableExpandedTitle(disease: Disease): SpannableString{
     var title = disease.type_fr?.plus("\n")?:""
-    title = title.plus(disease.name_fr?:"").plus("\n")
-    title = title.plus(disease.pathogen_fr?:"")
+    title = title.plus(disease.name?:"").plus("\n")
+    title = title.plus(disease.pathogen?:"")
     val ss1 = SpannableString(title)
-    val titleSize = disease.type_fr?.length?.plus(1)?:0
-    val diseaseSize = disease.name_fr?.length?.plus(1)?:0
+    val titleSize = disease.type?.length?.plus(1)?:0
+    val diseaseSize = disease.name?.length?.plus(1)?:0
     ss1.setSpan(RelativeSizeSpan(0.7f), titleSize, titleSize + diseaseSize, 0) // set size
     ss1.setSpan(RelativeSizeSpan(0.5f), (titleSize + diseaseSize -1), title.length, 0) // set size
     return ss1
@@ -111,7 +120,7 @@ class DiseaseDetailsFragment : Fragment() {
     var value = ""
     list?.forEach {
       if(value.isNotBlank()){
-        value = value.plus("\n\n")
+        value = value.plus("\n")
       }
       value = value.plus("• ").plus(it)
     }
