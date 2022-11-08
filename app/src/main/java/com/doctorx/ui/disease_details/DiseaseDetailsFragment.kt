@@ -5,10 +5,13 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
+import android.util.LayoutDirection
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -52,18 +55,38 @@ class DiseaseDetailsFragment : Fragment() {
     val lang = sharedPref.getString(getString(R.string.pref_lang), defaultValue)
 
     (activity as? AppCompatActivity)?.let{ activity ->
+      val ltrParams = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT
+      ).apply {
+        gravity = Gravity.LEFT
+      }
+      binding?.conditionsAndGeo?.layoutParams = ltrParams
+      binding?.symptomsLabel?.layoutParams = ltrParams
+      binding?.control?.layoutParams = ltrParams
+
       binding?.toolbar?.let{
         activity.setSupportActionBar(it)
       }
       binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo)
       binding?.symptomsLabel?.text = getString(R.string.symptoms)
       binding?.control?.text = getString(R.string.control)
+
       if (lang == getString(R.string.FR)) {
         binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo_fr)
         binding?.symptomsLabel?.text = getString(R.string.symptoms_fr)
         binding?.control?.text = getString(R.string.control_fr)
       }
       else if (lang == getString(R.string.AR)) {
+        val rtlParams = LinearLayout.LayoutParams(
+          LinearLayout.LayoutParams.WRAP_CONTENT,
+          LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+          gravity = Gravity.RIGHT
+        }
+        binding?.conditionsAndGeo?.layoutParams = rtlParams
+        binding?.symptomsLabel?.layoutParams = rtlParams
+        binding?.control?.layoutParams = rtlParams
         binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo_ar)
         binding?.symptomsLabel?.text = getString(R.string.symptoms_ar)
         binding?.control?.text = getString(R.string.control_ar)
@@ -151,10 +174,13 @@ class DiseaseDetailsFragment : Fragment() {
         }
       }
       confidence.apply {
-        var confidenceLabel = "Confidence: "
+        var confidenceLabel = context.getString(R.string.confidence)
         when (lang) {
+          getString(R.string.FR) -> {
+            confidenceLabel = context.getString(R.string.confidence_fr)
+          }
           getString(R.string.AR) -> {
-            confidenceLabel = "Confidence: "
+            confidenceLabel = context.getString(R.string.confidence_ar)
           }
         }
 

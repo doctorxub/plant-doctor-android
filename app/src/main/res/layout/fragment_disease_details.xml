@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:background="@drawable/confidence_drawable"
-                tools:text="Confidence: 99%"/>
+                tools:text="Confidence: %"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
