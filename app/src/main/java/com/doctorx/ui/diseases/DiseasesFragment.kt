@@ -82,40 +82,43 @@ class DiseasesFragment : Fragment() {
         langButton.text = lang
 
         when {
-            lang.equals(resources.getString(R.string.FR)) -> {
-              toolbarTitle.text = resources.getString(R.string.supported_diseases_fr)
-            }
-            lang.equals(resources.getString(R.string.AR)) -> {
-              toolbarTitle.text = resources.getString(R.string.supported_diseases_ar)
-            }
-            else -> {
-              toolbarTitle.text = resources.getString(R.string.supported_diseases)
-            }
+          lang.equals(resources.getString(R.string.FR)) -> {
+            toolbarTitle.text = resources.getString(R.string.supported_diseases_fr)
+          }
+          lang.equals(resources.getString(R.string.AR)) -> {
+            toolbarTitle.text = resources.getString(R.string.supported_diseases_ar)
+          }
+          else -> {
+            toolbarTitle.text = resources.getString(R.string.supported_diseases)
+          }
         }
 
         langButton.setOnClickListener {
           when {
-              langButton.text.equals(resources.getString(R.string.EN)) -> {
-                  langButton.text = resources.getString(R.string.FR)
-                  with (sharedPref.edit()) {
-                    putString(getString(R.string.pref_lang), resources.getString(R.string.FR))
-                    apply()
-                  }
+            langButton.text.equals(resources.getString(R.string.EN)) -> {
+              langButton.text = resources.getString(R.string.FR)
+              toolbarTitle.text = resources.getString(R.string.supported_diseases_fr)
+              with (sharedPref.edit()) {
+                putString(getString(R.string.pref_lang), resources.getString(R.string.FR))
+                apply()
               }
-              langButton.text.equals(resources.getString(R.string.FR)) -> {
-                  langButton.text = resources.getString(R.string.AR)
-                  with (sharedPref.edit()) {
-                    putString(getString(R.string.pref_lang), resources.getString(R.string.AR))
-                    apply()
-                  }
+            }
+            langButton.text.equals(resources.getString(R.string.FR)) -> {
+              langButton.text = resources.getString(R.string.AR)
+              toolbarTitle.text = resources.getString(R.string.supported_diseases_ar)
+              with (sharedPref.edit()) {
+                putString(getString(R.string.pref_lang), resources.getString(R.string.AR))
+                apply()
               }
-              langButton.text.equals(resources.getString(R.string.AR)) -> {
-                  langButton.text = resources.getString(R.string.EN)
-                  with (sharedPref.edit()) {
-                    putString(getString(R.string.pref_lang), resources.getString(R.string.EN))
-                    apply()
-                  }
+            }
+            langButton.text.equals(resources.getString(R.string.AR)) -> {
+              langButton.text = resources.getString(R.string.EN)
+              toolbarTitle.text = resources.getString(R.string.supported_diseases)
+              with (sharedPref.edit()) {
+                putString(getString(R.string.pref_lang), resources.getString(R.string.EN))
+                apply()
               }
+            }
           }
 
           updateControllerLang(langButton.text.toString())
@@ -140,7 +143,6 @@ class DiseasesFragment : Fragment() {
   }
 
   override fun onDestroyView() {
-
     super.onDestroyView()
     _binding = null
   }

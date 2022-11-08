@@ -4,7 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="supported_diseases">Supported Diseases</string>
     <string name="supported_diseases_fr">Maladies prises en charge</string>
-    <string name="supported_diseases_ar">Maladies prises en charge</string>
+    <string name="supported_diseases_ar">Supported Diseases</string>
     <string name="EN">EN</string>
     <string name="FR">FR</string>
     <string name="AR">AR</string>

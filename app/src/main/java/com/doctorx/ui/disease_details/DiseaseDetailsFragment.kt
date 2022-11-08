@@ -141,14 +141,14 @@ class DiseaseDetailsFragment : Fragment() {
       hosts.text = disease.conditions.plus("\n\n").plus(disease.geo)
       symptoms.text = listToText(disease.symptoms)
       when (lang) {
-          "FR" -> {
-            hosts.text = disease.conditions_fr.plus("\n\n").plus(disease.geo_fr)
-            symptoms.text = listToText(disease.symptoms_fr)
-          }
-          "AR" -> {
-            hosts.text = disease.conditions_ar.plus("\n\n").plus(disease.geo_ar)
-            symptoms.text = listToText(disease.symptoms_ar)
-          }
+        "FR" -> {
+          hosts.text = disease.conditions_fr.plus("\n\n").plus(disease.geo_fr)
+          symptoms.text = listToText(disease.symptoms_fr)
+        }
+        "AR" -> {
+          hosts.text = disease.conditions_ar.plus("\n\n").plus(disease.geo_ar)
+          symptoms.text = listToText(disease.symptoms_ar)
+        }
       }
       confidence.apply {
         visibility = disease.confidence?.takeIf { it > -1 }?.let {
