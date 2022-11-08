@@ -2,9 +2,6 @@
     <string name="app_name">DoctorX Nabat</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="supported_diseases">Supported Diseases</string>
-    <string name="supported_diseases_fr">Maladies prises en charge</string>
-    <string name="supported_diseases_ar">Supported Diseases</string>
     <string name="EN">EN</string>
     <string name="FR">FR</string>
     <string name="AR">AR</string>
@@ -14,8 +11,27 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="conditions_and_geo">Conditions and Geo</string>
-    <string name="symptoms">Symptoms</string>
-    <string name="control">Control</string>
     <string name="pref_lang">lang</string>
+
+    <string name="supported_diseases">Supported Diseases</string>
+    <string name="supported_diseases_fr">Maladies prises en charge</string>
+    <string name="supported_diseases_ar">Supported Diseases</string>
+    <string name="symptoms">Symptoms</string>
+    <string name="symptoms_fr">Symptômes</string>
+    <string name="symptoms_ar">Symptoms</string>
+    <string name="control">Control</string>
+    <string name="control_fr">Lutte</string>
+    <string name="control_ar">Control</string>
+    <string name="conditions_and_geo">Conditions and Geo</string>
+    <string name="conditions_and_geo_fr">Conditions et Geo</string>
+    <string name="conditions_and_geo_ar">Conditions and Geo</string>
+    <string name="chemical_controls">Chemical Controls:</string>
+    <string name="pest_management">Pest Management:</string>
+    <string name="bio_controls">Bio Controls:</string>
+    <string name="chemical_controls_fr">Lutte chimique:</string>
+    <string name="pest_management_fr">Lutte intégrée:</string>
+    <string name="bio_controls_fr">Lutte biologique:</string>
+    <string name="chemical_controls_ar">Chemical Controls:</string>
+    <string name="pest_management_ar">Pest Management:</string>
+    <string name="bio_controls_ar">Bio Controls:</string>
 </resources>

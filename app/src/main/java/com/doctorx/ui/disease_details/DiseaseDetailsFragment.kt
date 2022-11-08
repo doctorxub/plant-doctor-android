@@ -55,18 +55,18 @@ class DiseaseDetailsFragment : Fragment() {
       binding?.toolbar?.let{
         activity.setSupportActionBar(it)
       }
-      binding?.conditionsAndGeo?.text = "Conditions and Geo"
-      binding?.symptomsLabel?.text = "Symptoms"
-      binding?.control?.text = "Control"
-      if (lang == "FR") {
-        binding?.conditionsAndGeo?.text = "Conditions et Geo"
-        binding?.symptomsLabel?.text = "Symptômes"
-        binding?.control?.text = "Lutte"
+      binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo)
+      binding?.symptomsLabel?.text = getString(R.string.symptoms)
+      binding?.control?.text = getString(R.string.control)
+      if (lang == getString(R.string.FR)) {
+        binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo_fr)
+        binding?.symptomsLabel?.text = getString(R.string.symptoms_fr)
+        binding?.control?.text = getString(R.string.control_fr)
       }
-      else if (lang == "AR") {
-        binding?.conditionsAndGeo?.text = "Conditions and Geo"
-        binding?.symptomsLabel?.text = "Symptoms"
-        binding?.control?.text = "Control"
+      else if (lang == getString(R.string.AR)) {
+        binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo_ar)
+        binding?.symptomsLabel?.text = getString(R.string.symptoms_ar)
+        binding?.control?.text = getString(R.string.control_ar)
       }
 
       activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -103,24 +103,24 @@ class DiseaseDetailsFragment : Fragment() {
   }
 
   private fun getControlsText(disease: Disease, lang: String): String {
-    var cclabel = "Chemical Controls:"
-    var pmlabel = "Pest Management:"
-    var biolabel = "Bio Controls:"
+    var cclabel = getString(R.string.chemical_controls)
+    var pmlabel = getString(R.string.pest_management)
+    var biolabel = getString(R.string.bio_controls)
     var dcc = disease.chemical_control
     var dpm = disease.pest_management
     var dbc = disease.bio_control
-    if (lang == "FR") {
-      cclabel = "Lutte chimique:"
-      pmlabel = "Lutte intégrée:"
-      biolabel = "Lutte biologique:"
+    if (lang == getString(R.string.FR)) {
+      cclabel = getString(R.string.chemical_controls_fr)
+      pmlabel = getString(R.string.pest_management_fr)
+      biolabel = getString(R.string.bio_controls_fr)
       dcc = disease.chemical_control_fr
       dpm = disease.pest_management_fr
       dbc = disease.bio_control_fr
     }
-    else if (lang == "AR") {
-      cclabel = "Chemical Controls:"
-      pmlabel = "Pest Management:"
-      biolabel = "Bio Controls:"
+    else if (lang == getString(R.string.AR)) {
+      cclabel = getString(R.string.chemical_controls_ar)
+      pmlabel = getString(R.string.pest_management_ar)
+      biolabel = getString(R.string.bio_controls_ar)
       dcc = disease.chemical_control_ar
       dpm = disease.pest_management_ar
       dbc = disease.bio_control_ar
@@ -141,18 +141,25 @@ class DiseaseDetailsFragment : Fragment() {
       hosts.text = disease.conditions.plus("\n\n").plus(disease.geo)
       symptoms.text = listToText(disease.symptoms)
       when (lang) {
-        "FR" -> {
+        getString(R.string.FR) -> {
           hosts.text = disease.conditions_fr.plus("\n\n").plus(disease.geo_fr)
           symptoms.text = listToText(disease.symptoms_fr)
         }
-        "AR" -> {
+        getString(R.string.AR) -> {
           hosts.text = disease.conditions_ar.plus("\n\n").plus(disease.geo_ar)
           symptoms.text = listToText(disease.symptoms_ar)
         }
       }
       confidence.apply {
+        var confidenceLabel = "Confidence: "
+        when (lang) {
+          getString(R.string.AR) -> {
+            confidenceLabel = "Confidence: "
+          }
+        }
+
         visibility = disease.confidence?.takeIf { it > -1 }?.let {
-          text = "Confidence: ".plus(it).plus("%")
+          text = confidenceLabel.plus(it).plus("%")
           View.VISIBLE
         }?: View.GONE
       }
