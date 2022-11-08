@@ -16,16 +16,16 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="140dp"
             android:background="?attr/colorPrimary"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
             app:maxLines="5"
-            app:title="hey yoou\nerer\nwewe"
+            app:title="test \ test \ test"
             app:collapsedTitleGravity="start"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/expandedImage"

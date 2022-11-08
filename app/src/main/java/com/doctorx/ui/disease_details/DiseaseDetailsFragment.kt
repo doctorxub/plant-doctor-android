@@ -2,10 +2,11 @@ package com.doctorx.ui.disease_details
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.util.LayoutDirection
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,7 +21,6 @@ import com.doctorx.R
 import com.doctorx.databinding.FragmentDiseaseDetailsBinding
 import com.doctorx.db.data.Disease
 import java.io.File
-import java.lang.Exception
 
 
 /**
@@ -55,6 +55,10 @@ class DiseaseDetailsFragment : Fragment() {
     val lang = sharedPref.getString(getString(R.string.pref_lang), defaultValue)
 
     (activity as? AppCompatActivity)?.let{ activity ->
+      binding?.toolbar?.let{
+        activity.setSupportActionBar(it)
+      }
+
       val ltrParams = LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -65,9 +69,6 @@ class DiseaseDetailsFragment : Fragment() {
       binding?.symptomsLabel?.layoutParams = ltrParams
       binding?.control?.layoutParams = ltrParams
 
-      binding?.toolbar?.let{
-        activity.setSupportActionBar(it)
-      }
       binding?.conditionsAndGeo?.text = getString(R.string.conditions_and_geo)
       binding?.symptomsLabel?.text = getString(R.string.symptoms)
       binding?.control?.text = getString(R.string.control)
@@ -196,12 +197,12 @@ class DiseaseDetailsFragment : Fragment() {
     var dtype = disease.type
     var dname = disease.name
     var dpathogen = disease.pathogen
-    if (lang == "FR") {
+    if (lang == getString(R.string.FR)) {
       dtype = disease.type_fr
       dname = disease.name_fr
       dpathogen = disease.pathogen_fr
     }
-    else if (lang == "AR") {
+    else if (lang == getString(R.string.AR)) {
       dtype = disease.type_ar
       dname = disease.name_ar
       dpathogen = disease.pathogen_ar
@@ -211,10 +212,11 @@ class DiseaseDetailsFragment : Fragment() {
     title = title.plus(dname?:"").plus("\n")
     title = title.plus(dpathogen?:"")
     val ss1 = SpannableString(title)
-    val titleSize = dtype?.length?.plus(1)?:0
-    val diseaseSize = dname?.length?.plus(1)?:0
-    ss1.setSpan(RelativeSizeSpan(0.5f), titleSize, titleSize + diseaseSize, 0) // set size
-    ss1.setSpan(RelativeSizeSpan(0.4f), (titleSize + diseaseSize -1), title.length, 0) // set size
+    val titleSize = dtype?.length?.plus(1) ?: 0
+    val diseaseSize = dname?.length?.plus(1) ?: 0
+    ss1.setSpan(ForegroundColorSpan(Color.TRANSPARENT), 0, titleSize, 0)
+    ss1.setSpan(RelativeSizeSpan(0.5f), titleSize, titleSize + diseaseSize, 0)
+    ss1.setSpan(RelativeSizeSpan(0.4f), (titleSize + diseaseSize - 1), title.length, 0)
     return ss1
   }
 
