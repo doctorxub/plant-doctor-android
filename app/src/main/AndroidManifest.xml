@@ -10,7 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Doctorxub"
-        android:usesCleartextTraffic="true"
         android:name="com.doctorx.MainApplication">
         <activity
             android:name="com.doctorx.ui.MainActivity"
