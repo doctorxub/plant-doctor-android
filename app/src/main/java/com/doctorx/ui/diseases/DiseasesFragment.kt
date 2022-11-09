@@ -1,5 +1,6 @@
 package com.doctorx.ui.diseases
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.doctorx.R
 import com.doctorx.databinding.FragmentDiseasesBinding
 import com.doctorx.db.data.Disease
 import com.doctorx.ui.DiseasesController
@@ -41,6 +43,10 @@ class DiseasesFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
 
     activity?.let { activity ->
+      val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
+      val defaultValue = resources.getString(R.string.EN)
+      val lang = sharedPref.getString(getString(R.string.pref_lang), defaultValue)
+
       dataController = DiseasesController().also {
         _binding?.recyclerView?.apply {
           adapter = it.adapter
@@ -56,26 +62,87 @@ class DiseasesFragment : Fragment() {
           }
         }
       }
+
       model.getDiseasesLiveData(activity).let {
-        it.value?.let { it1 -> updateController(it1) }
+        it.value?.let { it1 ->
+          if (lang != null) {
+            updateController(it1, lang)
+          }
+        }
         it.observe(activity, { data ->
           // Update the UI, in this case, a TextView.
           Log.d("awslog", "diseases : $data")
-          updateController(data)
+          if (lang != null) {
+            updateController(data, lang)
+          }
         })
+      }
+
+      binding.apply {
+        langButton.text = lang
+
+        when {
+          lang.equals(resources.getString(R.string.FR)) -> {
+            toolbarTitle.text = resources.getString(R.string.supported_diseases_fr)
+          }
+          lang.equals(resources.getString(R.string.AR)) -> {
+            toolbarTitle.text = resources.getString(R.string.supported_diseases_ar)
+          }
+          else -> {
+            toolbarTitle.text = resources.getString(R.string.supported_diseases)
+          }
+        }
+
+        langButton.setOnClickListener {
+          when {
+            langButton.text.equals(resources.getString(R.string.EN)) -> {
+              langButton.text = resources.getString(R.string.FR)
+              toolbarTitle.text = resources.getString(R.string.supported_diseases_fr)
+              with (sharedPref.edit()) {
+                putString(getString(R.string.pref_lang), resources.getString(R.string.FR))
+                apply()
+              }
+            }
+            langButton.text.equals(resources.getString(R.string.FR)) -> {
+              langButton.text = resources.getString(R.string.AR)
+              toolbarTitle.text = resources.getString(R.string.supported_diseases_ar)
+              with (sharedPref.edit()) {
+                putString(getString(R.string.pref_lang), resources.getString(R.string.AR))
+                apply()
+              }
+            }
+            langButton.text.equals(resources.getString(R.string.AR)) -> {
+              langButton.text = resources.getString(R.string.EN)
+              toolbarTitle.text = resources.getString(R.string.supported_diseases)
+              with (sharedPref.edit()) {
+                putString(getString(R.string.pref_lang), resources.getString(R.string.EN))
+                apply()
+              }
+            }
+          }
+
+          updateControllerLang(langButton.text.toString())
+        }
       }
     }
   }
 
-  fun updateController(dataList: List<Disease>) {
+  fun updateController(dataList: List<Disease>, pref_lang: String) {
     dataController?.apply {
       data = dataList
+      lang = pref_lang
+      requestModelBuild()
+    }
+  }
+
+  fun updateControllerLang(pref_lang: String) {
+    dataController?.apply {
+      lang = pref_lang
       requestModelBuild()
     }
   }
 
   override fun onDestroyView() {
-
     super.onDestroyView()
     _binding = null
   }

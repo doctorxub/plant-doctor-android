@@ -7,12 +7,14 @@ import com.doctorx.ui.models.DiseaseRowModel_
 class DiseasesController : EpoxyController() {
 
   var data : List<Disease> = emptyList()
+  var lang: String = "EN"
   var onItemClickListener: DiseasesClickListener? = null
   override fun buildModels() {
     data.forEach {
       DiseaseRowModel_()
         .id(it.id)
         .disease(it)
+        .lang(lang)
         .clickListener(onItemClickListener)
         .also {
           add(it)

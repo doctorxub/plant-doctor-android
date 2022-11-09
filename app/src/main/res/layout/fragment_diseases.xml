@@ -11,22 +11,35 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Doctorxub.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.Doctorxub.PopupOverlay" >
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/supported_diseases"
-                android:textStyle="bold"
+                android:textColor="#F1F8E9"
                 android:textSize="24sp"
-                android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
-        </androidx.appcompat.widget.Toolbar>
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/lang_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/EN"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
