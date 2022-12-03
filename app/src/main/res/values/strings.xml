@@ -37,4 +37,6 @@
     <string name="confidence">\"Confidence: \"</string>
     <string name="confidence_fr">\"Confidence: \"</string>
     <string name="confidence_ar">\"ثقة: \"</string>
+    <string name="takePicture">Take Picture</string>
+    <string name="pickImage">Pick Image</string>
 </resources>

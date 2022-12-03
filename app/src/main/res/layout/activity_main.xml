@@ -15,6 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/stat_sys_upload" />
+        app:fabSize="auto"
+        app:maxImageSize="78dp"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        app:useCompatPadding="false" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
