@@ -71,7 +71,22 @@ class MainActivity : AppCompatActivity() {
 
   fun showMenu(v: View) {
     val popup = PopupMenu(this, v)
-    popup.inflate(R.menu.actions)
+
+    val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+    val defaultValue = resources.getString(R.string.EN)
+    val lang = sharedPref.getString(getString(R.string.pref_lang), defaultValue)
+
+    when {
+      lang.equals(resources.getString(R.string.FR)) -> {
+        popup.inflate(R.menu.actions_fr)
+      }
+      lang.equals(resources.getString(R.string.AR)) -> {
+        popup.inflate(R.menu.actions_ar)
+      }
+      else -> {
+        popup.inflate(R.menu.actions)
+      }
+    }
     popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
 
       when (item!!.itemId) {
@@ -110,8 +125,6 @@ class MainActivity : AppCompatActivity() {
 
   private fun takePicture() {
     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-    takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     try {
       startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
     } catch (e: ActivityNotFoundException) {

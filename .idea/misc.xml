@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/fragment_disease_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_diseases.xml" value="0.1" />
         <entry key="app/src/main/res/menu/actions.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/actions_ar.xml" value="0.21822916666666667" />
+        <entry key="app/src/main/res/menu/actions_fr.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.17239583333333333" />
         <entry key="app/src/main/res/xml/provider_paths.xml" value="0.1322463768115942" />
       </map>
