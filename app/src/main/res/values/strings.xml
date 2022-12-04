@@ -12,6 +12,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="pref_lang">lang</string>
+    <string name="pref_tutorial">tutorial</string>
 
     <string name="supported_diseases">Diseases list</string>
     <string name="supported_diseases_fr">Liste des maladies</string>
@@ -43,4 +44,7 @@
     <string name="pick_image">Pick Image</string>
     <string name="pick_image_fr">Choisir une image</string>
     <string name="pick_image_ar">اختر صورة</string>
+    <string name="show_tutorial">Show Tutorial</string>
+    <string name="show_tutorial_fr">Afficher les instructions</string>
+    <string name="show_tutorial_ar">إظهار التعليمات</string>
 </resources>

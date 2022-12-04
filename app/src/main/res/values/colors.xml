@@ -12,4 +12,5 @@
     <color name="green_light">#805FA52E</color>
     <color name="text_color">#FF000000</color>
     <color name="grey_transparent">#6F6C6C6C</color>
+    <color name="tutorial_bg">#aa000000</color>
 </resources>

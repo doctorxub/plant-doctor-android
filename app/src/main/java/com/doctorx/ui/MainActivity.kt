@@ -10,10 +10,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import com.doctorx.R
@@ -41,11 +43,18 @@ class MainActivity : AppCompatActivity() {
     const val REQUEST_IMAGE_CAPTURE = 102
   }
 
+  private var tutorialCounter = 1
   private var selectedImageUri: Uri? = null
   private lateinit var binding: ActivityMainBinding
 
   private lateinit var controller: NavController
   private lateinit var listener: NavController.OnDestinationChangedListener
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_main, menu)
+    MenuCompat.setGroupDividerEnabled(menu, true)
+    return true
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -67,6 +76,60 @@ class MainActivity : AppCompatActivity() {
         binding.fab.visibility = View.VISIBLE
       }
     }
+
+    binding.nextButton.setOnClickListener {
+      binding.backButton.visibility = View.VISIBLE
+      if (tutorialCounter < 4) {
+        tutorialCounter++
+      }
+
+      when (tutorialCounter) {
+          2 -> {
+            binding.tutorialImageView.setImageResource(R.drawable.tutorial_2)
+          }
+          3 -> {
+            binding.tutorialImageView.setImageResource(R.drawable.tutorial_3)
+            binding.nextButton.text = "Done"
+          }
+          4 -> {
+            tutorialCounter = 1
+            binding.fab.visibility = View.VISIBLE
+            binding.tutorialView.visibility = View.GONE
+            val sharedPref = getPreferences(Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+              putBoolean(getString(com.doctorx.R.string.pref_tutorial), true)
+              apply()
+            }
+          }
+      }
+    }
+
+    binding.backButton.setOnClickListener {
+      binding.nextButton.text = "Next"
+      if (tutorialCounter > 1) {
+        tutorialCounter--
+      }
+
+      binding.backButton.visibility = View.VISIBLE
+      when (tutorialCounter) {
+        1 -> {
+          binding.backButton.visibility = View.GONE
+          binding.tutorialImageView.setImageResource(R.drawable.tutorial_1)
+        }
+        2 -> {
+          binding.tutorialImageView.setImageResource(R.drawable.tutorial_2)
+        }
+      }
+    }
+  }
+
+  fun showTutorial() {
+    tutorialCounter = 1
+    binding.nextButton.text = "Next"
+    binding.backButton.visibility = View.GONE
+    binding.tutorialImageView.setImageResource(R.drawable.tutorial_1)
+    binding.fab.visibility = View.GONE
+    binding.tutorialView.visibility = View.VISIBLE
   }
 
   fun showMenu(v: View) {
@@ -96,6 +159,9 @@ class MainActivity : AppCompatActivity() {
         R.id.takePicture -> {
           takePicture()
         }
+        R.id.showTutorial -> {
+          showTutorial()
+        }
       }
 
       true
@@ -107,6 +173,14 @@ class MainActivity : AppCompatActivity() {
   override fun onResume() {
     super.onResume()
     controller.addOnDestinationChangedListener(listener)
+
+    val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+    val tutorial = sharedPref.getBoolean(getString(R.string.pref_tutorial), false)
+    if (!tutorial) {
+      binding.fab.visibility = View.GONE
+    } else {
+      binding.tutorialView.visibility = View.GONE
+    }
   }
 
   override fun onPause() {

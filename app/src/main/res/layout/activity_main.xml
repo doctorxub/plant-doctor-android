@@ -15,9 +15,52 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+
         app:fabSize="auto"
         app:maxImageSize="78dp"
         app:srcCompat="@drawable/ic_launcher_foreground"
         app:useCompatPadding="false" />
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/tutorial_bg"
+        android:clickable="true"
+        android:id="@+id/tutorial_view"
+        android:focusable="true">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="15dp">
+            <ImageView
+                android:id="@+id/tutorial_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tutorial_1"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="bottom|start"
+            android:visibility="gone"
+            android:text="&lt; Back" />
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_gravity="bottom|end"
+            android:text="Next &gt;" />
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
