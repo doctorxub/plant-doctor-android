@@ -8,10 +8,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -47,8 +44,13 @@ class DiseaseDetailsFragment : Fragment() {
 
   }
 
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    menu.clear()
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    setHasOptionsMenu(true)
 
     val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
     val defaultValue = resources.getString(R.string.EN)
@@ -95,7 +97,6 @@ class DiseaseDetailsFragment : Fragment() {
 
       activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
       activity.supportActionBar?.setDisplayShowHomeEnabled(true)
-      setHasOptionsMenu(false)
     }
 
     (args.diseaseId as? Int)?.let{ id ->
@@ -186,6 +187,7 @@ class DiseaseDetailsFragment : Fragment() {
         }
 
         visibility = disease.confidence?.takeIf { it > -1 }?.let {
+
           text = confidenceLabel.plus(it).plus("%")
           View.VISIBLE
         }?: View.GONE

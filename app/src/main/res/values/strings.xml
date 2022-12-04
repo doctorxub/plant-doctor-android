@@ -35,9 +35,9 @@
     <string name="bio_controls">Bio Controls:</string>
     <string name="bio_controls_fr">Lutte biologique:</string>
     <string name="bio_controls_ar">مكافحة بيولوجية:</string>
-    <string name="confidence">\"Confidence: \"</string>
-    <string name="confidence_fr">\"Confidence: \"</string>
-    <string name="confidence_ar">\"ثقة: \"</string>
+    <string name="confidence">Confidence: </string>
+    <string name="confidence_fr">Confidence: "</string>
+    <string name="confidence_ar">ثقة: </string>
     <string name="take_picture">Take Picture</string>
     <string name="take_picture_fr">Prendre une photo</string>
     <string name="take_picture_ar">التقط صورة</string>
