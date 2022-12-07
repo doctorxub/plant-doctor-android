@@ -1,12 +1,15 @@
 package com.doctorx.ui
 
+import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -14,7 +17,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -41,6 +46,7 @@ class MainActivity : AppCompatActivity() {
   companion object {
     const val REQUEST_CODE_PICK_IMAGE = 101
     const val REQUEST_IMAGE_CAPTURE = 102
+    const val REQUEST_LEGACY_STORAGE_PERMISSION = 112
   }
 
   private var tutorialCounter = 1
@@ -157,7 +163,20 @@ class MainActivity : AppCompatActivity() {
           openImageChooser()
         }
         R.id.takePicture -> {
-          takePicture()
+          try {
+            takePicture()
+          } catch (e: Exception) {
+            val PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (!hasPermissions(applicationContext, PERMISSIONS)) {
+              ActivityCompat.requestPermissions(this@MainActivity, PERMISSIONS, REQUEST_LEGACY_STORAGE_PERMISSION)
+            } else {
+              Toast.makeText(
+                applicationContext,
+                "Please check if you have full storage",
+                Toast.LENGTH_LONG
+              ).show()
+            }
+          }
         }
         R.id.showTutorial -> {
           showTutorial()
@@ -168,6 +187,42 @@ class MainActivity : AppCompatActivity() {
     })
 
     popup.show()
+  }
+
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<String?>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    when (requestCode) {
+      REQUEST_LEGACY_STORAGE_PERMISSION -> {
+        if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          takePicture()
+        } else {
+          Toast.makeText(
+            applicationContext,
+            "The app was not allowed to write in your storage",
+            Toast.LENGTH_LONG
+          ).show()
+        }
+      }
+    }
+  }
+
+  private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+      for (permission in permissions) {
+        if (ActivityCompat.checkSelfPermission(
+            context,
+            permission
+          ) != PackageManager.PERMISSION_GRANTED
+        ) {
+          return false
+        }
+      }
+    }
+    return true
   }
 
   override fun onResume() {
@@ -199,6 +254,9 @@ class MainActivity : AppCompatActivity() {
 
   private fun takePicture() {
     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    val bmp = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+    selectedImageUri = getImageUri(applicationContext, bmp)
+    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImageUri);
     try {
       startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
     } catch (e: ActivityNotFoundException) {
@@ -258,8 +316,6 @@ class MainActivity : AppCompatActivity() {
           uploadImage()
         }
         REQUEST_IMAGE_CAPTURE -> {
-          val photo = data?.extras?.get("data") as Bitmap
-          selectedImageUri = getImageUri(applicationContext, photo)
           uploadImage()
         }
       }
