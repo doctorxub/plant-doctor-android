@@ -15,9 +15,21 @@
         tools:layout="@layout/fragment_diseases">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FirstFragment_to_ClassSelectionFragment"
+            app:destination="@id/ClassSelectionFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/ClassSelectionFragment"
+        android:name="com.doctorx.ui.ClassSelectionFragment"
+        android:label="Class Selection Fragment"
+        tools:layout="@layout/fragment_class_selection">
+
+        <action
+            android:id="@+id/action_ClassSelectionFragment_to_DiseaseDetailsFragment"
+            app:destination="@id/SecondFragment"/>
+    </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.doctorx.ui.disease_details.DiseaseDetailsFragment"

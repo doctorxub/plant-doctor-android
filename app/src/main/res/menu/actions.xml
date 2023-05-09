@@ -11,8 +11,7 @@
         <item
             android:id="@+id/takePicture"
             android:title="@string/take_picture" />
-        <item
-            android:id="@+id/pickImage"
-            android:title="@string/pick_image" />
     </group>
+
+
 </menu>

@@ -42,13 +42,13 @@ import java.io.FileOutputStream
 
 
 class MainActivity : AppCompatActivity() {
-
+/*
   companion object {
     const val REQUEST_CODE_PICK_IMAGE = 101
     const val REQUEST_IMAGE_CAPTURE = 102
     const val REQUEST_LEGACY_STORAGE_PERMISSION = 112
   }
-
+*/
   private var tutorialCounter = 1
   private var selectedImageUri: Uri? = null
   private lateinit var binding: ActivityMainBinding
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    ApiInterface.getAndStoreDiseases(this)
+    //ApiInterface.getAndStoreDiseases(this)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
@@ -76,7 +76,8 @@ class MainActivity : AppCompatActivity() {
     listener =  NavController.OnDestinationChangedListener{ controller, destination, arguments ->
       // react on change
       // you can check destination.id or destination.label and act based on that
-      if(destination.id == R.id.SecondFragment){
+      if( (destination.id == R.id.SecondFragment) || (destination.id == R.id.ClassSelectionFragment))
+         {
         binding.fab.visibility = View.GONE
       } else{
         binding.fab.visibility = View.VISIBLE
@@ -159,24 +160,10 @@ class MainActivity : AppCompatActivity() {
     popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
 
       when (item!!.itemId) {
-        R.id.pickImage -> {
-          openImageChooser()
-        }
         R.id.takePicture -> {
-          try {
-            takePicture()
-          } catch (e: Exception) {
-            val PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            if (!hasPermissions(applicationContext, PERMISSIONS)) {
-              ActivityCompat.requestPermissions(this@MainActivity, PERMISSIONS, REQUEST_LEGACY_STORAGE_PERMISSION)
-            } else {
-              Toast.makeText(
-                applicationContext,
-                "Please check if you have full storage",
-                Toast.LENGTH_LONG
-              ).show()
-            }
-          }
+          controller.navigate(
+            DiseasesFragmentDirections.actionFirstFragmentToClassSelectionFragment()
+          )
         }
         R.id.showTutorial -> {
           showTutorial()
@@ -187,42 +174,6 @@ class MainActivity : AppCompatActivity() {
     })
 
     popup.show()
-  }
-
-  override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<String?>,
-    grantResults: IntArray
-  ) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    when (requestCode) {
-      REQUEST_LEGACY_STORAGE_PERMISSION -> {
-        if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          takePicture()
-        } else {
-          Toast.makeText(
-            applicationContext,
-            "The app was not allowed to write in your storage",
-            Toast.LENGTH_LONG
-          ).show()
-        }
-      }
-    }
-  }
-
-  private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-      for (permission in permissions) {
-        if (ActivityCompat.checkSelfPermission(
-            context,
-            permission
-          ) != PackageManager.PERMISSION_GRANTED
-        ) {
-          return false
-        }
-      }
-    }
-    return true
   }
 
   override fun onResume() {
@@ -243,63 +194,11 @@ class MainActivity : AppCompatActivity() {
     super.onPause()
   }
 
-  private fun openImageChooser() {
-    Intent(Intent.ACTION_GET_CONTENT).also {
-      it.type = "image/*"
-      val mimeTypes = arrayOf("image/jpeg", "image/png")
-      it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-      startActivityForResult(it, REQUEST_CODE_PICK_IMAGE)
-    }
-  }
 
-  private fun takePicture() {
-    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    val bmp = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-    selectedImageUri = getImageUri(applicationContext, bmp)
-    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImageUri);
-    try {
-      startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-    } catch (e: ActivityNotFoundException) {
-      // display error state to the user
-    }
-  }
 
   override fun onSupportNavigateUp(): Boolean {
     onBackPressed()
     return true
-  }
-
-
-  private val job = Job()
-  private val scopeMainThread = CoroutineScope(job + Dispatchers.Main)
-  private val scopeIO = CoroutineScope(job + Dispatchers.IO)
-
-  private fun uploadImage(){
-    if (selectedImageUri == null) {
-      return
-    }
-
-    scopeIO.launch {
-      contentResolver.openFileDescriptor(selectedImageUri!!, "r", null)?.let{parcelFileDescriptor ->
-        val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
-        val file = File(cacheDir, contentResolver.getFileName(selectedImageUri!!))
-        val outputStream = FileOutputStream(file)
-        inputStream.copyTo(outputStream)
-
-        val part = getFileMultiPart("file", file)
-
-        val result = ApiInterface.UploadImageAndSavePrediction(this@MainActivity, part)
-        scopeMainThread.launch {
-          if(result.second != -1){
-            controller.navigate(
-              DiseasesFragmentDirections.actionToSecondFragment(
-                result.second, file.path
-              )
-            )
-          }
-        }
-      }
-    }
   }
 
   private fun showErrorMessage(view: View, message: String){
@@ -307,49 +206,4 @@ class MainActivity : AppCompatActivity() {
       .setAction("Action", null).show()
   }
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK) {
-      when (requestCode) {
-        REQUEST_CODE_PICK_IMAGE -> {
-          selectedImageUri = data?.data
-          uploadImage()
-        }
-        REQUEST_IMAGE_CAPTURE -> {
-          uploadImage()
-        }
-      }
-    }
-  }
-
-  fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
-    val bytes = ByteArrayOutputStream()
-    inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-    val path: String = MediaStore.Images.Media.insertImage(
-      inContext.getContentResolver(),
-      inImage, "Title", null
-    )
-    return Uri.parse(path)
-  }
-
-  fun getFileMultiPart( partName: String?,
-    file: File
-  ): MultipartBody.Part {
-    // create RequestBody instance from file
-    val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
-    // MultipartBody.Part is used to send also the actual file name
-    return MultipartBody.Part.createFormData(partName, file.name, requestFile)
-  }
-
-  fun ContentResolver.getFileName(fileUri: Uri): String {
-    var name = ""
-    val returnCursor = this.query(fileUri, null, null, null, null)
-    if (returnCursor != null) {
-      val nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-      returnCursor.moveToFirst()
-      name = returnCursor.getString(nameIndex)
-      returnCursor.close()
-    }
-    return name
-  }
 }

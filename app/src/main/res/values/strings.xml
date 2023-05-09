@@ -14,6 +14,9 @@
     <string name="pref_lang">lang</string>
     <string name="pref_tutorial">tutorial</string>
 
+    <string name="plants_selection">Crops</string>
+    <string name="plants_selection_fr">Cultures</string>
+    <string name="plants_selection_ar">المحاصيل</string>
     <string name="supported_diseases">Diseases list</string>
     <string name="supported_diseases_fr">Liste des maladies</string>
     <string name="supported_diseases_ar">قائمة الأمراض</string>
@@ -47,4 +50,13 @@
     <string name="show_tutorial">Show Tutorial</string>
     <string name="show_tutorial_fr">Afficher les instructions</string>
     <string name="show_tutorial_ar">إظهار التعليمات</string>
+    <string name="cumcumber_img_desc">Cucumber Image</string>
+    <string name="tomatoe_img_desc">Tomatoes Image</string>
+    <string name="pepper_img_desc">Pepper Image</string>
+    <string name="take_picture_cucumber">Take a picture of a cucumber plant</string>
+    <string name="take_picture_tomatoe">Take a picture of a tomatoe plant</string>
+    <string name="take_picture_pepper">Take a picture of a pepper plant</string>
+    <string name="pick_picture_cucumber">Load an image of cucumber plant</string>
+    <string name="pick_picture_tomatoe">Load an image of tomatoe plant</string>
+    <string name="pick_picture_pepper">Load an image of peppers plant</string>
 </resources>

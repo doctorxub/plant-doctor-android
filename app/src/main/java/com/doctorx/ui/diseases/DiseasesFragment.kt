@@ -47,17 +47,18 @@ class DiseasesFragment : Fragment() {
       val defaultValue = resources.getString(R.string.EN)
       val lang = sharedPref.getString(getString(R.string.pref_lang), defaultValue)
 
-      dataController = DiseasesController().also {
+      dataController = DiseasesController().also { controller->
         _binding?.recyclerView?.apply {
-          adapter = it.adapter
+          adapter = controller.adapter
           layoutManager = LinearLayoutManager(activity)
         }
-        it.onItemClickListener = object : DiseasesController.DiseasesClickListener {
-          override fun onDiseaseClick(id: Int) {
+        //it.onItemClickListener = object : DiseasesController.DiseasesClickListener {
+        controller.onItemClickListener = object : DiseasesController.DiseasesClickListener {
+          //override
+          override fun onDiseaseClick(//id: Int
+            ) {
             findNavController().navigate(
-              DiseasesFragmentDirections.actionFirstFragmentToSecondFragment(
-                id
-              )
+              DiseasesFragmentDirections.actionFirstFragmentToClassSelectionFragment()
             )
           }
         }
@@ -69,13 +70,14 @@ class DiseasesFragment : Fragment() {
             updateController(it1, lang)
           }
         }
-        it.observe(activity, { data ->
+        it.observe(activity)//,
+         { data ->
           // Update the UI, in this case, a TextView.
           Log.d("awslog", "diseases : $data")
-          if (lang != null) {
+          if ((lang != null)  && (data != null)) {
             updateController(data, lang)
           }
-        })
+        }//)
       }
 
       binding.apply {
@@ -127,7 +129,7 @@ class DiseasesFragment : Fragment() {
     }
   }
 
-  fun updateController(dataList: List<Disease>, pref_lang: String) {
+  private fun updateController(dataList: List<Disease>, pref_lang: String) {
     dataController?.apply {
       data = dataList
       lang = pref_lang
@@ -135,7 +137,7 @@ class DiseasesFragment : Fragment() {
     }
   }
 
-  fun updateControllerLang(pref_lang: String) {
+  private fun updateControllerLang(pref_lang: String) {
     dataController?.apply {
       lang = pref_lang
       requestModelBuild()

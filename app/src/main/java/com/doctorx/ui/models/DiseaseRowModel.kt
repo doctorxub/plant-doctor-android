@@ -42,7 +42,7 @@ abstract class DiseaseRowModel : EpoxyModelWithHolder<DiseaseRowModel.Holder>() 
     }
     disease?.id?.let{ id ->
       holder.itemView.setOnClickListener {
-        clickListener?.onDiseaseClick(id)
+        clickListener?.onDiseaseClick()
       }
     }
   }

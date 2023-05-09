@@ -99,16 +99,17 @@ class DiseaseDetailsFragment : Fragment() {
       activity.supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    (args.diseaseId as? Int)?.let{ id ->
-      activity?.let { activity ->
-        model.getDiseaseLiveData(activity,id).observe(activity, { disease ->
-          Log.d("awslog", "disease details are: $disease")
-          if (lang != null) {
-            updateUI(disease, lang)
-          }
-        })
+
+      (args.diseaseId as? Int)?.let{ id ->
+        activity?.let { activity ->
+          model.getDiseaseLiveData(activity,id).observe(activity, { disease ->
+            Log.d("awslog", "disease details are: $disease")
+            if ((lang != null) && (disease != null)) {
+              updateUI(disease, lang)
+            }
+          })
+        }
       }
-    }
 
     binding?.expandedImage?.apply{
       visibility = (args.image as? String)?.let{

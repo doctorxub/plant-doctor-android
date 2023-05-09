@@ -14,18 +14,22 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.util.concurrent.TimeUnit
 
 
 interface ApiInterface {
 
   companion object {
-    val BaseUrl = "https://doctorxub.com/api/"
+    var BaseUrl = "https://doctorxub.com/api/"
+    //val BaseUrl = "https://470c-181-55-68-32.ngrok-free.app/api/"
+
     var gson = GsonBuilder()
       .setLenient()
       .create()
 
     var okHttpClient = OkHttpClient()
       .newBuilder()
+      .connectTimeout(500000,TimeUnit.MILLISECONDS)
       .addInterceptor(ApiInterceptor())
       .build()
 
@@ -46,7 +50,7 @@ interface ApiInterface {
     fun getAndStoreDiseases(context: Context) {
       GlobalScope.launch {
         try {
-          retrofit.getCurrentWeatherData().diseases?.let {
+          retrofit.getDiseasesList().diseases?.let {
             val db = AppDatabase(context)
             db.DiseasesDao().nukeTable()
             db.DiseasesDao().insertAll(*it.toTypedArray())
@@ -59,7 +63,8 @@ interface ApiInterface {
 
     suspend fun UploadImageAndSavePrediction(
       context: Context,
-      part: MultipartBody.Part
+      part: MultipartBody.Part,
+      ptype: Int
     ): Pair<String?, Int> {
       Log.d("awslogUp", "UploadImageAndSavePrediction called")
       var diseaseId: Int  = -1
@@ -75,8 +80,8 @@ interface ApiInterface {
           )
           uploadImageResponse.filename?.let { fileName ->
             try {
-              Log.d("awslogUp", "UploadImageAndSavePrediction getting prediction")
-              val response = retrofit.getPrediction(fileName)
+              Log.d("awslogUp", "UploadImageAndSavePrediction getting prediction for plant type just cucumber")
+              val response = retrofit.getPredictionPlantsType(fileName, ptype)
               if (response.success == 1) {
                 Log.d("awslogUp", "UploadImageAndSavePrediction getting prediction succeeded")
                 response.getDiseaseWithConfidence()?.let {
@@ -124,10 +129,13 @@ interface ApiInterface {
   }
 
   @GET("diseases")
-  suspend fun getCurrentWeatherData(): DiseasesResponse
+  suspend fun getDiseasesList(): DiseasesResponse
 
   @GET("predict/{fileName}")
   suspend fun getPrediction(@Path("fileName") fileName: String): PredictionResponse
+  @GET("predict/{fileName}/{ptype}")
+  suspend fun getPredictionPlantsType(@Path("fileName") fileName: String,
+                                      @Path("ptype") ptype: Int): PredictionResponse
 
   @Multipart
   @POST("upload")

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.doctorx.ui.ClassSelectionFragment">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Doctorxub.AppBarOverlay"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plants_selection"
+                android:textColor="#F1F8E9"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/lang_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/EN"
+                tools:ignore="TextContrastCheck"/>
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:id="@+id/load_images"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="13dp"
+        android:gravity="start|center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/image_cucumber"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:contentDescription="@string/cumcumber_img_desc"
+            android:src="@drawable/ic_cucumbers"
+            app:layout_constraintBottom_toTopOf="@+id/load_image_cucumbers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBar"/>
+        <LinearLayout
+            android:id="@+id/load_image_cucumbers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/image_tomatoes"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/image_cucumber">
+
+            <ImageButton
+                android:id="@+id/button_cam_cucumber"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:contentDescription="@string/take_picture_cucumber"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_photo_camera_48" tools:ignore="DuplicateSpeakableTextCheck"/>
+
+            <ImageButton
+                android:id="@+id/button_photo_cucumber"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:contentDescription="@string/pick_picture_cucumber"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_cucumber_healthy_frame"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/image_tomatoes"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/tomatoe_img_desc"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_tomatoes"
+            app:layout_constraintBottom_toTopOf="@+id/load_image_tomatoes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/load_image_cucumbers"/>
+        <LinearLayout
+            android:id="@+id/load_image_tomatoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_tomatoes">
+
+            <ImageButton
+                android:id="@+id/button_cam_tomatoes"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:contentDescription="@string/take_picture_cucumber"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_photo_camera_48"/>
+
+            <ImageButton
+                android:id="@+id/button_photo_tomatoes"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:contentDescription="@string/pick_picture_tomatoe"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_tomato_healthy_frame"/>
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/image_peppers"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:contentDescription="@string/pepper_img_desc"
+            android:src="@drawable/ic_peppers"
+            app:layout_constraintBottom_toTopOf="@+id/load_image_peppers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/load_image_tomatoes"/>
+
+        <LinearLayout
+            android:id="@+id/load_image_peppers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/image_peppers">
+
+            <ImageButton
+                android:id="@+id/button_cam_peppers"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:contentDescription="@string/take_picture_pepper"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_photo_camera_48" tools:ignore="TouchTargetSizeCheck"/>
+
+            <ImageButton
+                android:id="@+id/button_photo_peppers"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:background="@null"
+                android:contentDescription="@string/pick_picture_pepper"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_pepper_healthy_frame"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
