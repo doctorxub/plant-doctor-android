@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.doctorx.db.converters.StringsToStringConverter
 import com.doctorx.db.data.Disease
 
-@Database(entities = arrayOf(Disease::class), version = 3)
+@Database(entities = arrayOf(Disease::class), version = 3, exportSchema=false)
 @TypeConverters(StringsToStringConverter::class)
 abstract class AppDatabase: RoomDatabase() {
   abstract fun DiseasesDao(): DiseasesDao

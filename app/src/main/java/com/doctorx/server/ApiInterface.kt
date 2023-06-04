@@ -18,10 +18,9 @@ import java.util.concurrent.TimeUnit
 
 
 interface ApiInterface {
-
   companion object {
-    var BaseUrl = "https://doctorxub.com/api/"
-    //val BaseUrl = "https://470c-181-55-68-32.ngrok-free.app/api/"
+    val BaseUrl = "https://drnabat.biosaline.org/api/"
+    //val BaseUrl = "https://e69a-181-55-68-32.ngrok-free.app/api/"
 
     var gson = GsonBuilder()
       .setLenient()
