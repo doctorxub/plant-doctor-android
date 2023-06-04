@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.doctorxnabat"
+        applicationId "org.drnabat"
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 7
