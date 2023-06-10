@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 interface ApiInterface {
   companion object {
     val BaseUrl = "https://drnabat.biosaline.org/api/"
-    //val BaseUrl = "https://e69a-181-55-68-32.ngrok-free.app/api/"
+    //val BaseUrl = "https://5ff0-181-55-68-32.ngrok-free.app/api/"
 
     var gson = GsonBuilder()
       .setLenient()
@@ -80,7 +80,14 @@ interface ApiInterface {
           uploadImageResponse.filename?.let { fileName ->
             try {
               Log.d("awslogUp", "UploadImageAndSavePrediction getting prediction for plant type just cucumber")
-              val response = retrofit.getPredictionPlantsType(fileName, ptype)
+              var crop: String = ""
+
+              when (ptype){
+                1-> crop = "cucumber"
+                2-> crop = "capsicum"
+                3-> crop = "tomato"
+              }
+              val response = retrofit.getPredictionPlantsType(fileName, crop)
               if (response.success == 1) {
                 Log.d("awslogUp", "UploadImageAndSavePrediction getting prediction succeeded")
                 response.getDiseaseWithConfidence()?.let {
@@ -135,7 +142,9 @@ interface ApiInterface {
   @GET("predict/{fileName}/{ptype}")
   suspend fun getPredictionPlantsType(@Path("fileName") fileName: String,
                                       @Path("ptype") ptype: Int): PredictionResponse
-
+  @GET("predict/{fileName}/{crop}")
+  suspend fun getPredictionPlantsType(@Path("fileName") fileName: String,
+                                      @Path("crop") crop: String): PredictionResponse
   @Multipart
   @POST("upload")
   suspend fun updateImage(
